@@ -59,5 +59,15 @@ public class SpacePhoto implements Parcelable{
                 new SpacePhoto("https://2.bp.blogspot.com/-RORl6AFyxLI/W7solHwIrKI/AAAAAAAAACI/077_SFrtCXYV3M7501Qa84bvF08V2w3RgCLcBGAs/s1600/home_img6.jpg", "Ariana 6"),
         };
     }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mUrl);
+        parcel.writeString(mTitle);
+    }
 
 }
