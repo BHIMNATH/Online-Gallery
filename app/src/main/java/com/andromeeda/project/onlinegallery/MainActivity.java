@@ -1,10 +1,15 @@
 package com.andromeeda.project.onlinegallery;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,6 +18,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_images);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+
+        ImageGalleryAdapter adapter = new ImageGalleryAdapter(this, SpacePhoto.getSpacePhotos());
+        recyclerView.setAdapter(adapter);
     }
     private class ImageGalleryAdapter extends RecyclerView.Adapter<ImageGalleryAdapter.MyViewHolder>  {
 
@@ -21,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
             Context context = parent.getContext();
             LayoutInflater inflater = LayoutInflater.from(context);
-            View photoView = inflater.inflate(R.layout.item_photo, parent, false);
+            View photoView = inflater.inflate(R.layout.custom_item_layout, parent, false);
             ImageGalleryAdapter.MyViewHolder viewHolder = new ImageGalleryAdapter.MyViewHolder(photoView);
             return viewHolder;
         }
@@ -65,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         private SpacePhoto[] mSpacePhotos;
         private Context mContext;
 
-        public ImageGalleryAdapter(Context context, SpacePhoto[] spacePhotos) {
+        public ImageGalleryAdapter(MainActivity context, SpacePhoto[] spacePhotos) {
             mContext = context;
             mSpacePhotos = spacePhotos;
         }
